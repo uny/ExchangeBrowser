@@ -28,6 +28,6 @@ public class ExchangeFrame extends JFrame {
 //        dataset.addSeries(series);
 //        JFreeChart chart = ChartFactory.createScatterPlot("為替相場履歴", "", "為替相場", dataset, PlotOrientation.VERTICAL, true, false, false);
 //        ChartPanel chartPanel = new ChartPanel(chart);
-        getContentPane().add(chartPanel, BorderLayout.CENTER);
+        //getContentPane().add(chartPanel, BorderLayout.CENTER);
     }
 }
