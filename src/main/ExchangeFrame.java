@@ -21,6 +21,8 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
+import panel.ExchangeChartPanelFactory;
+
 /**
  * @author ynagai
  *
@@ -39,16 +41,8 @@ public class ExchangeFrame extends JFrame {
         System.exit(-1);
     }
     public ExchangeFrame(String filename) {
-        dataList_ = new ArrayList<String[]>();
-        TimeSeriesCollection collection = new TimeSeriesCollection();
-        TimeSeries series = new TimeSeries("為替");
         dataList_ = loadExchangeData(filename);
-        addDataToSeries(dataList_, series);
-        collection.addSeries(series);
-        JFreeChart chart = ChartFactory.createTimeSeriesChart("為替相場", "日付", "為替相場", collection, true, false, false);
-        chart.removeLegend();
-        ChartPanel chartPanel = new ChartPanel(chart);
-        getContentPane().add(chartPanel, BorderLayout.CENTER);
+        getContentPane().add(ExchangeChartPanelFactory.createChartPanel(dataList_), BorderLayout.CENTER);
     }
     // --------------
     // Private Method
@@ -74,19 +68,5 @@ public class ExchangeFrame extends JFrame {
             e.printStackTrace();
         }
         return dataList;
-    }
-    private void addDataToSeries(ArrayList<String[]> dataList, TimeSeries series) {
-        for (String[] strings : dataList) {
-            String[] date = strings[0].split("/");
-            try {
-                int year = Integer.parseInt(date[0]);
-                int month = Integer.parseInt(date[1]);
-                int day = Integer.parseInt(date[2]);
-                series.add(new Day(day, month, year), Double.parseDouble(strings[1]));
-            } catch (NumberFormatException e) {
-                // Do nothing
-            }
-        }
-        return;
     }
 }
